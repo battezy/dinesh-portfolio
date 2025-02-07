@@ -1,66 +1,49 @@
 import React from "react";
+import "../style/academics.css";
+
+const academicData = [
+  {
+    degree: "Doctor of Philosophy (Ph.D.) - Chemical Engineering",
+    timeline: "[2022 - Present]",
+    institute: "Indian Institute of Technology Roorkee (IITR), India",
+    cgpa: "CGPA: 9.17/10",
+  },
+  {
+    degree: "Master of Technology (M.Sc.) – Analytical Chemistry",
+    timeline: "[2017 - 2019]",
+    institute: "Department of Chemistry, University of Mumbai, India",
+    cgpa: "CGPA: 7.21/10",
+  },
+  {
+    degree: "Bachelor of Technology (B.Sc.) – Chemistry",
+    timeline: "[2014 - 2017]",
+    institute: "Thakur College of Science and Commerce, University of Mumbai, India",
+    cgpa: "CGPA: 6.72/7",
+  },
+];
 
 export default function Academics() {
   return (
-    <div>
-      <main>
-        <div className="header-img">
-          <div className="header-overlay"></div>
-          <h1>ACADEMICS</h1>
-          <img
-            src="https://images.unsplash.com/photo-1543877087-ebf71fde2be1?w=500&auto=format&fit=crop&q=60"
-            alt="Academics"
-          />
-        </div>
+    <div className="academics-container">
+      <header className="academics-header">
+        <h1>ACADEMICS</h1>
+        <div className="overlay"></div>
+        <img
+          src="https://images.unsplash.com/photo-1543877087-ebf71fde2be1?w=500&auto=format&fit=crop&q=60"
+          alt="Academics"
+          loading="lazy"
+        />
+      </header>
 
-        <div className="content-box">
-          <div style={{ borderTop: "4px solid rgb(6, 50, 118)", padding: "20px 0px" }}>
-            <ul style={{ marginLeft: "8px", paddingLeft: "10px" }}>
-              <li>
-                <h5 className="acad-heading">
-                  <b>
-                    Doctor of Philosophy (Ph.D.) - Chemical Engineering{" "}
-                    <span className="acad-timeline">[2022 - Present]</span>
-                  </b>
-                </h5>
-                <div style={{ margin: "0 10px" }}>
-                  <div>Indian Institute of Technology Roorkee (IITR), India</div>
-                  <div>CGPA: 9.17/10</div>
-                </div>
-              </li>
-              <br />
-
-              <li>
-                <h5 className="acad-heading">
-                  <b>
-                    Master of Technology (M.Sc.) – Analytical Chemistry{" "}
-                    <span className="acad-timeline">[2017 - 2019]</span>
-                  </b>
-                </h5>
-                <div style={{ margin: "0 10px" }}>
-                  <div>Department of Chemistry, University of Mumbai, India</div>
-                  <div>CGPA: 7.21/10</div>
-                </div>
-              </li>
-              <br />
-
-              <li>
-                <h5 className="acad-heading">
-                  <b>
-                    Bachelor of Technology (B.Sc.) – Chemistry{" "}
-                    <span className="acad-timeline">[2014 - 2017]</span>
-                  </b>
-                </h5>
-                <div style={{ margin: "0 10px" }}>
-                  <div>Thakur College of Science and Commerce, University of Mumbai, India</div>
-                  <div>CGPA: 6.72/7</div>
-                </div>
-              </li>
-              <br />
-            </ul>
+      <section className="academics-list">
+        {academicData.map((item, index) => (
+          <div key={index} className="academic-item">
+            <h3>{item.degree} <span className="acad-timeline">{item.timeline}</span></h3>
+            <p>{item.institute}</p>
+            <p className="cgpa">{item.cgpa}</p>
           </div>
-        </div>
-      </main>
+        ))}
+      </section>
     </div>
   );
 }

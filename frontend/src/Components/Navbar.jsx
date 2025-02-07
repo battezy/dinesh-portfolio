@@ -24,8 +24,8 @@ export default function Navbar() {
                     style={{ marginRight: "70px", fontWeight: 700 }}
                 >
                     <ul className="navbar-nav">
-                        <li className="nav-item active">
-                            <Link className="nav-link" to="/">Home</Link> {/* ✅ Changed to Link */}
+                        <li className="nav-item ">
+                            <Link className="nav-link" to="/">Home</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/academics">Academics</Link>
