@@ -6,6 +6,7 @@ import Academics from "./pages/academics";
 import Gallery from "./pages/gallery";
 import Achievement from "./pages/achievement";
 import Conference from "./pages/conference";
+import AdminLogin from "./pages/AdminLogin";
 
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
         <Route path="/conferences" element={<Conference />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/publications" element={<Publication />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+
 
 
         {/* <Route path="dashboard/*" element={<Dashboard />} /> */}
