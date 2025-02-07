@@ -7,6 +7,8 @@ import Gallery from "./pages/gallery";
 import Achievement from "./pages/achievement";
 import Conference from "./pages/conference";
 import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./AdminPanel/pages/AdminDashboard";
+import Dashboard from "./AdminPanel/components/Sidebar";
 
 
 function App() {
@@ -22,7 +24,9 @@ function App() {
         <Route path="/publications" element={<Publication />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
-        {/* <Route path="dashboard/*" element={<Dashboard />} /> */}
+        <Route path="/admin/dashboard/*" element={<AdminDashboard />} />
+        <Route path="/admin/sidebar/*" element={<Dashboard />} />
+
       </Routes>
     </BrowserRouter>
   );

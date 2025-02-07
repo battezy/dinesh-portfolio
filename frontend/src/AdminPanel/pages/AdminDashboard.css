@@ -1,0 +1,58 @@
+.admin-container {
+    max-width: 800px;
+    margin: 50px auto;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .stat-card {
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  .actions button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .actions button:hover {
+    background: #218838;
+  }
+  
+  .logout {
+    margin-top: 20px;
+    background: #dc3545;
+    width: 100%;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .logout:hover {
+    background: #c82333;
+  }
+  
