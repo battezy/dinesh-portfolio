@@ -22,8 +22,6 @@ function App() {
         <Route path="/publications" element={<Publication />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
-
-
         {/* <Route path="dashboard/*" element={<Dashboard />} /> */}
       </Routes>
     </BrowserRouter>
