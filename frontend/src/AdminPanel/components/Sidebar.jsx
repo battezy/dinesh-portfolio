@@ -14,6 +14,9 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar">
+      <br />
+      <br />
+      <br />
       <h2>Admin Panel</h2>
       <ul>
         <li><Link to="/admin/dashboard/home">Home</Link></li>

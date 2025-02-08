@@ -18,7 +18,10 @@ import AdminGallery from "./AdminPanel/pages/AdminGallery";
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
+    <div style={{position:"sticky", top:"0", zIndex:"10000"}}>
+    <Navbar />
+    </div>
+     
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
