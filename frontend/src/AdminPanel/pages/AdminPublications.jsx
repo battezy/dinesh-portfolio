@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./AdminPublications.css";
+import { FaEdit, FaTrash, FaBookOpen } from "react-icons/fa"; // Importing icons
+import "../style/adminpublications.css";
 
 export default function AdminPublications() {
   const [publications, setPublications] = useState([]);
@@ -78,12 +79,21 @@ export default function AdminPublications() {
       <ul>
         {publications.map((item) => (
           <li key={item._id}>
-            <h3>{item.title}</h3>
+            <h5><FaBookOpen className="icon" /> {item.title}</h5>
             <p><strong>Authors:</strong> {item.authors}</p>
             <p><strong>Journal:</strong> {item.journal}</p>
-            <a href={item.link} target="_blank" rel="noopener noreferrer">Read More →</a>
-            <button onClick={() => handleEdit(item)}>Edit</button>
-            <button onClick={() => handleDelete(item._id)}>Delete</button>
+            <p>
+              <strong>Read More:</strong> 
+              <a href={item.link} target="_blank" rel="noopener noreferrer"> {item.link} </a>
+            </p>
+            <div className="action-buttons">
+              <button onClick={() => handleEdit(item)} id="btn-edit">
+                <FaEdit /> Edit
+              </button>
+              <button onClick={() => handleDelete(item._id)} id="btn-delete">
+                <FaTrash /> Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>

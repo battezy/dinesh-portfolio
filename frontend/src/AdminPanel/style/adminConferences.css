@@ -1,5 +1,5 @@
 .admin-conferences {
-  max-width: 600px;
+  max-width: 800px;
   margin: 50px auto;
   text-align: center;
 
@@ -8,6 +8,12 @@
     font-size: 1.8rem;
     margin-bottom: 20px;
   }
+
+  
+  h5 {
+    color: #0056b3;
+    font-weight: bold;
+}
 
   form {
     display: flex;
@@ -36,6 +42,9 @@
     border-radius: 5px;
     cursor: pointer;
   }
+  p{
+    font-size: 15px;
+  }
 
   button:hover {
     background: #0056b3;
@@ -49,6 +58,7 @@
   li {
     background: white;
     padding: 15px;
+    font-size: 16px;
     margin: 10px 0;
     border-radius: 5px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -56,6 +66,23 @@
 
   button {
     margin: 5px;
+    padding:6px 13px ;
+  }
+
+  #btn-edit {
+    background-color: green;
+  }
+
+  #btn-edit:hover {
+    background-color: rgb(6, 92, 6);
+  }
+
+  #btn-delete {
+    background-color: rgb(220, 7, 7);
+  }
+
+  #btn-delete:hover {
+    background-color: rgb(155, 10, 10);
   }
 
 }

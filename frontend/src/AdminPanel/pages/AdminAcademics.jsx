@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FaEdit, FaTrash, FaGraduationCap } from "react-icons/fa"; // Importing icons
 import "../style/adminacademics.css";
 
 export default function AdminAcademics() {
@@ -54,11 +55,17 @@ export default function AdminAcademics() {
       <ul>
         {academics.map((item) => (
           <li key={item._id}>
-            <h3>{item.degree} <span className="timeline">{item.timeline}</span></h3>
+            <h5><FaGraduationCap className="icon" /> {item.degree} <span className="timeline">{item.timeline}</span></h5>
             <p>{item.institute}</p>
-            <p className="cgpa">{item.cgpa}</p>
-            <button onClick={() => handleEdit(item)}>Edit</button>
-            <button onClick={() => handleDelete(item._id)}>Delete</button>
+            <p className="cgpa">CGPA : {item.cgpa}</p>
+            <div className="action-buttons">
+              <button onClick={() => handleEdit(item)} id="btn-edit">
+                <FaEdit /> Edit
+              </button>
+              <button onClick={() => handleDelete(item._id)} id="btn-delete">
+                <FaTrash /> Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FaEdit, FaTrash, FaCalendarAlt } from "react-icons/fa"; // Importing icons
 import "../style/adminconferences.css";
 
 export default function AdminConferences() {
@@ -63,10 +64,16 @@ export default function AdminConferences() {
       <ul>
         {conferences.map((item) => (
           <li key={item._id}>
-            <h3>{item.title}</h3>
+            <h5><FaCalendarAlt className="icon" /> {item.title}</h5>
             <p>{item.description}</p>
-            <button onClick={() => handleEdit(item)}>Edit</button>
-            <button onClick={() => handleDelete(item._id)}>Delete</button>
+            <div className="action-buttons">
+              <button onClick={() => handleEdit(item)} id="btn-edit">
+                <FaEdit /> Edit
+              </button>
+              <button onClick={() => handleDelete(item._id)} id="btn-delete">
+                <FaTrash /> Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>

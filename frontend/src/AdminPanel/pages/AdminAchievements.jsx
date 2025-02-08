@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FaEdit, FaTrash, FaTrophy } from "react-icons/fa"; // Importing icons
 import "../style/adminachievements.css";
 
 export default function AdminAchievements() {
@@ -57,9 +58,15 @@ export default function AdminAchievements() {
       <ul>
         {achievements.map((item) => (
           <li key={item._id}>
-            <p>{item.title}</p>
-            <button onClick={() => handleEdit(item)}>Edit</button>
-            <button onClick={() => handleDelete(item._id)}>Delete</button>
+            <p><FaTrophy className="icon" /> {item.title}</p>
+            <div className="action-buttons">
+              <button onClick={() => handleEdit(item)} id="btn-edit">
+                <FaEdit /> Edit
+              </button>
+              <button onClick={() => handleDelete(item._id)} id="btn-delete">
+                <FaTrash /> Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>

@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 // Add New Conference (Protected)
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const newConference = new ConferencesModel(req.body);
     await newConference.save();
