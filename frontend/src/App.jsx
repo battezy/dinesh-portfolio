@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home"
+import Home from "./pages/Home";
 import Navbar from "./Components/Navbar";
 import Publication from "./pages/publication";
 import Academics from "./pages/academics";
@@ -8,14 +8,19 @@ import Achievement from "./pages/achievement";
 import Conference from "./pages/conference";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./AdminPanel/pages/AdminDashboard";
-import Dashboard from "./AdminPanel/components/Sidebar";
-
+import AdminHome from "./AdminPanel/pages/AdminHome";
+import AdminAcademics from "./AdminPanel/pages/AdminAcademics";
+import AdminAchievements from "./AdminPanel/pages/AdminAchievements";
+import AdminPublications from "./AdminPanel/pages/AdminPublications";
+import AdminConferences from "./AdminPanel/pages/AdminConferences";
+import AdminGallery from "./AdminPanel/pages/AdminGallery";
 
 function App() {
   return (
     <BrowserRouter>
-    <Navbar/>
+      <Navbar />
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/academics" element={<Academics />} />
         <Route path="/achievements" element={<Achievement />} />
@@ -24,9 +29,15 @@ function App() {
         <Route path="/publications" element={<Publication />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
-        <Route path="/admin/dashboard/*" element={<AdminDashboard />} />
-        <Route path="/admin/sidebar/*" element={<Dashboard />} />
-
+        {/* Protected Admin Routes (With Sidebar) */}
+        <Route path="/admin/dashboard" element={<AdminDashboard />}>
+          <Route path="home" element={<AdminHome />} />
+          <Route path="academics" element={<AdminAcademics />} />
+          <Route path="achievements" element={<AdminAchievements />} />
+          <Route path="publications" element={<AdminPublications />} />
+          <Route path="conferences" element={<AdminConferences />} />
+          <Route path="gallery" element={<AdminGallery/>} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

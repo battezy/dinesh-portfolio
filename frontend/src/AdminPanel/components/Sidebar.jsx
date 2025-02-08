@@ -1,28 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "./Sidebar.css";
 
-import "./sidebar.css"
+export default function Sidebar() {
 
-export default function Dashboard() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/admin/login");
+  };
+
+
   return (
-    <div className="dashboard">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <h2>Admin Panel</h2>
-        <ul>
-          <li><Link to="/admin/home">Home</Link></li>
-          <li><Link to="/admin/academics">Academics</Link></li>
-          <li><Link to="/admin/achievements">Achievements</Link></li>
-          <li><Link to="/admin/gallery">Gallery</Link></li>
-          <li><Link to="/admin/publications">Publications</Link></li>
-        </ul>
-      </aside>
+    <div className="sidebar">
+      <h2>Admin Panel</h2>
+      <ul>
+        <li><Link to="/admin/dashboard/home">Home</Link></li>
+        <li><Link to="/admin/dashboard/academics">Academics</Link></li>
+        <li><Link to="/admin/dashboard/achievements">Achievements</Link></li>
+        <li><Link to="/admin/dashboard/publications">Publications</Link></li>
+        <li><Link to="/admin/dashboard/conferences">Conferences</Link></li>
+        <li><Link to="/admin/dashboard/gallery">Gallery</Link></li>
 
-      {/* Main Content */}
-      <main className="main-content">
-        <h1>Welcome to Admin Dashboard</h1>
-        <p>Manage your portfolio from here.</p>
-      </main>
+        <button className="logout" onClick={handleLogout}>Logout</button>
+      </ul>
     </div>
   );
 }
