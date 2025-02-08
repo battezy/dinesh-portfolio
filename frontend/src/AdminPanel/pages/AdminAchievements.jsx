@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash, FaTrophy } from "react-icons/fa"; // Importing icons
 import "../style/adminachievements.css";
+import { toast } from "react-toastify";
 
 export default function AdminAchievements() {
   const [achievements, setAchievements] = useState([]);
@@ -11,7 +12,7 @@ export default function AdminAchievements() {
   useEffect(() => {
     axios.get("http://localhost:5000/api/achievements")
       .then((res) => setAchievements(res.data))
-      .catch(() => alert("Error fetching achievements!"));
+      .catch(() => toast.error("Error fetching achievements!"));
   }, []);
 
   const handleSubmit = async (e) => {
@@ -20,6 +21,7 @@ export default function AdminAchievements() {
     if (editId) {
       await axios.put(`http://localhost:5000/api/achievements/${editId}`, formData);
       setEditId(null);
+      toast.success("Data updated successfully!")
     } else {
       await axios.post("http://localhost:5000/api/achievements", formData);
     }
@@ -31,6 +33,7 @@ export default function AdminAchievements() {
   const handleDelete = async (id) => {
     await axios.delete(`http://localhost:5000/api/achievements/${id}`);
     setAchievements(achievements.filter((item) => item._id !== id));
+    toast.delete("Data deleted successfully!")
   };
 
   const handleEdit = (item) => {

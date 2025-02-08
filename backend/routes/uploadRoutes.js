@@ -16,7 +16,7 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "portfolio_images", // Folder in Cloudinary
-    format: async (req, file) => "png", // File format
+    format: async () => "png", // File format
     public_id: (req, file) => file.originalname.split(".")[0],
   },
 });
@@ -25,8 +25,12 @@ const upload = multer({ storage });
 
 const router = express.Router();
 
-router.post("/upload", upload.single("image"), (req, res) => {
-  res.json({ imageUrl: req.file.path });
+router.post("/", upload.single("image"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded!" });
+  }
+
+  res.json({ imageUrl: req.file.path || req.file.url });
 });
 
 export default router;

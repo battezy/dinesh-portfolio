@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash, FaGraduationCap } from "react-icons/fa"; // Importing icons
 import "../style/adminacademics.css";
+import { toast } from "react-toastify";
 
 export default function AdminAcademics() {
   const [academics, setAcademics] = useState([]);
@@ -11,7 +12,7 @@ export default function AdminAcademics() {
   useEffect(() => {
     axios.get("http://localhost:5000/api/academics")
       .then((res) => setAcademics(res.data))
-      .catch(() => alert("Error fetching academics!"));
+      .catch(() => toast.error("Error fetching academics!"));
   }, []);
 
   const handleSubmit = async (e) => {
@@ -20,6 +21,8 @@ export default function AdminAcademics() {
     if (editId) {
       await axios.put(`http://localhost:5000/api/academics/${editId}`, formData);
       setEditId(null);
+      toast.success("Data updated successfully!")
+      
     } else {
       await axios.post("http://localhost:5000/api/academics", formData);
     }

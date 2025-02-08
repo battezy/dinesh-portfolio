@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function AdminHome() {
   const [homeData, setHomeData] = useState({ images: ["", ""], about: "" });
@@ -26,14 +27,14 @@ export default function AdminHome() {
       setHomeData({ ...homeData, images: newImages });
       setImagePreview(newImages);
     } catch (err) {
-      alert("Image upload failed!");
+      toast.error("Image upload failed!");
     }
   };
 
   const handleUpdate = () => {
     axios.put("http://localhost:5000/api/home", homeData)
-      .then(() => alert("Home updated successfully!"))
-      .catch(() => alert("Update failed!"));
+      .then(() => toast.success("Home updated successfully!"))
+      .catch(() => toast.error("Update failed!"));
   };
 
   return (

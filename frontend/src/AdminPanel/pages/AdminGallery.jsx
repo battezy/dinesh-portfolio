@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../style/admingallery.css";
+import { toast } from "react-toastify";
 
 export default function AdminGallery() {
   const [images, setImages] = useState([]);
@@ -9,7 +10,7 @@ export default function AdminGallery() {
   useEffect(() => {
     axios.get("http://localhost:5000/api/gallery")
       .then((res) => setImages(res.data))
-      .catch(() => alert("Error fetching images!"));
+      .catch(() => toast.error("Error fetching images!"));
   }, []);
 
   const handleFileChange = (e) => {
@@ -17,7 +18,7 @@ export default function AdminGallery() {
   };
 
   const handleUpload = async () => {
-    if (!selectedFile) return alert("Please select an image!");
+    if (!selectedFile) return toast.warn("Please select an image!");
 
     const formData = new FormData();
     formData.append("image", selectedFile);
@@ -28,15 +29,17 @@ export default function AdminGallery() {
 
       axios.get("http://localhost:5000/api/gallery").then((res) => setImages(res.data));
       setSelectedFile(null);
-      alert("Image uploaded successfully!");
+      toast.success("Image uploaded successfully!");
     } catch (err) {
-      alert("Image upload failed!");
+      toast.error("Image upload failed!");
     }
   };
 
   const handleDelete = async (id) => {
     await axios.delete(`http://localhost:5000/api/gallery/${id}`);
     setImages(images.filter((img) => img._id !== id));
+    toast.delete("Data deleted successfully!")
+    
   };
 
   return (

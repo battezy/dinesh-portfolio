@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash, FaBookOpen } from "react-icons/fa"; // Importing icons
 import "../style/adminpublications.css";
+import { toast } from "react-toastify";
 
 export default function AdminPublications() {
   const [publications, setPublications] = useState([]);
@@ -11,7 +12,7 @@ export default function AdminPublications() {
   useEffect(() => {
     axios.get("http://localhost:5000/api/publications")
       .then((res) => setPublications(res.data))
-      .catch(() => alert("Error fetching publications!"));
+      .catch(() => toast.error("Error fetching publications!"));
   }, []);
 
   const handleSubmit = async (e) => {
@@ -20,6 +21,8 @@ export default function AdminPublications() {
     if (editId) {
       await axios.put(`http://localhost:5000/api/publications/${editId}`, formData);
       setEditId(null);
+      toast.success("Data updated successfully!")
+      
     } else {
       await axios.post("http://localhost:5000/api/publications", formData);
     }
@@ -31,6 +34,7 @@ export default function AdminPublications() {
   const handleDelete = async (id) => {
     await axios.delete(`http://localhost:5000/api/publications/${id}`);
     setPublications(publications.filter((item) => item._id !== id));
+    toast.delete("Data deleted successfully!")
   };
 
   const handleEdit = (item) => {

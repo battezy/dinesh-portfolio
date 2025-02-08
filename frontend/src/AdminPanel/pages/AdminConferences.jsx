@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash, FaCalendarAlt } from "react-icons/fa"; // Importing icons
 import "../style/adminconferences.css";
+import { toast } from "react-toastify";
 
 export default function AdminConferences() {
   const [conferences, setConferences] = useState([]);
@@ -11,7 +12,7 @@ export default function AdminConferences() {
   useEffect(() => {
     axios.get("http://localhost:5000/api/conferences")
       .then((res) => setConferences(res.data))
-      .catch(() => alert("Error fetching conferences!"));
+      .catch(() => toast.error("Error fetching conferences!"));
   }, []);
 
   const handleSubmit = async (e) => {
@@ -20,6 +21,8 @@ export default function AdminConferences() {
     if (editId) {
       await axios.put(`http://localhost:5000/api/conferences/${editId}`, formData);
       setEditId(null);
+      toast.success("Data updated successfully!")
+      
     } else {
       await axios.post("http://localhost:5000/api/conferences", formData);
     }
