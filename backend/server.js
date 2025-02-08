@@ -7,6 +7,7 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import academicsRoutes from "./routes/academicsRoutes.js";
 import achievementsRoutes from "./routes/achievementsRoutes.js";
 import conferencesRoutes from "./routes/conferencesRoutes.js";
+import publicationsRoutes from "./routes/publicationsRoutes.js";
 
 
 dotenv.config();
@@ -21,6 +22,8 @@ app.use("/api/upload", uploadRoutes);
 app.use("/api/academics", academicsRoutes);
 app.use("/api/achievements", achievementsRoutes);
 app.use("/api/conferences", conferencesRoutes);
+app.use("/api/publications", publicationsRoutes);
+
 
 
 
