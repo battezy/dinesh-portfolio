@@ -5,6 +5,8 @@ import cors from "cors";
 import adminRoutes from "./routes/adminRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import academicsRoutes from "./routes/academicsRoutes.js";
+import achievementsRoutes from "./routes/achievementsRoutes.js";
+
 
 dotenv.config();
 const app = express();
@@ -16,6 +18,8 @@ app.use(express.json());
 app.use("/api/admin", adminRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/academics", academicsRoutes);
+app.use("/api/achievements", achievementsRoutes);
+
 
 
 const PORT = process.env.PORT || 5000;
