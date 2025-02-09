@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaHome, FaUserGraduate, FaTrophy, FaBook, FaUsers, FaImages, FaUser, FaSignOutAlt } from "react-icons/fa"; // Import Icons
+import { FaHome, FaUserGraduate, FaTrophy, FaBook, FaUsers, FaImages, FaUser, FaSignOutAlt, FaChartBar } from "react-icons/fa"; // Import Icons
 import "./Sidebar.css";
 
 export default function Sidebar() {
@@ -21,7 +21,10 @@ export default function Sidebar() {
         <li><Link to="/admin/dashboard/publications"><FaBook /> Publications</Link></li>
         <li><Link to="/admin/dashboard/conferences"><FaUsers /> Conferences</Link></li>
         <li><Link to="/admin/dashboard/gallery"><FaImages /> Gallery</Link></li>
+        <li><Link to="/admin/dashboard/stats"><FaChartBar /> Stats</Link></li>
         <li><Link to="/admin/dashboard/profile"><FaUser /> Profile</Link></li>
+
+
       </ul>
 
       <button className="logout" onClick={handleLogout}>

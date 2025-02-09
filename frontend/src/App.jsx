@@ -15,6 +15,7 @@ import AdminPublications from "./AdminPanel/pages/AdminPublications";
 import AdminConferences from "./AdminPanel/pages/AdminConferences";
 import AdminGallery from "./AdminPanel/pages/AdminGallery"; 
 import AdminProfile from "./AdminPanel/pages/AdminProfile";
+import AdminStats from "./AdminPanel/pages/AdminStats";
 
 function App() {
   return (
@@ -42,6 +43,8 @@ function App() {
           <Route path="conferences" element={<AdminConferences />} />
           <Route path="gallery" element={<AdminGallery/>} />
           <Route path="profile" element={<AdminProfile/>} />
+          <Route path="stats" element={<AdminStats/>} />
+
 
         </Route>
       </Routes>

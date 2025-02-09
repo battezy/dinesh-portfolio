@@ -1,8 +1,14 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import Admin from "../models/Admin.js";
+import AdminModel from "../models/Admin.js";
+import AchievementModel from "../models/Achievements.js";
+import PublicationModel from "../models/Publications.js";
+import ConferenceModel from "../models/Conferences.js";
+import GalleryModel from "../models/Gallery.js";
+
 import verifyToken from "../middleware/authMiddleware.js";
+import AcademicsModel from "../models/Academics.js";
 
 const router = express.Router();
 
@@ -11,7 +17,7 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const admin = await Admin.findOne({ email });
+    const admin = await AdminModel.findOne({ email });
     if (!admin) return res.status(400).json({ message: "Admin not found!" });
 
     const isMatch = await bcrypt.compare(password, admin.password);
@@ -70,6 +76,28 @@ router.put("/change-password", verifyToken, async (req, res) => {
     res.json({ message: "Password updated successfully!" });
   } catch (error) {
     res.status(500).json({ message: "Error changing password" });
+  }
+});
+
+
+// Get Admin Dashboard Stats
+router.get("/stats", async (req, res) => {
+  try {
+    const totalAcademics = await AcademicsModel.countDocuments();
+    const totalAchievements = await AchievementModel.countDocuments();
+    const totalPublications = await PublicationModel.countDocuments();
+    const totalConferences = await ConferenceModel.countDocuments();
+    const totalImages = await GalleryModel.countDocuments();
+
+    res.json({
+      totalAcademics,
+      totalAchievements,
+      totalPublications,
+      totalConferences,
+      totalImages,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching stats" });
   }
 });
 
