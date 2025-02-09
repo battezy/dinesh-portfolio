@@ -42,6 +42,7 @@
         height: 20vh;
         object-fit: cover;
         display: block;
+        z-index: 100;
     }
 
     .gallery-item button {

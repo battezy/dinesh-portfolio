@@ -101,8 +101,8 @@ export default function AdminPublications() {
             <p><strong>Authors:</strong> {item.authors}</p>
             <p><strong>Journal:</strong> {item.journal}</p>
             <p>
-              <strong> Read More →</strong>
-              <a href={item.link} target="_blank" rel="noopener noreferrer"> {item.link} </a>
+
+              <a href={item.link} target="_blank" rel="noopener noreferrer"><strong> Read More →</strong></a>
             </p>
             <div className="action-buttons">
               <button onClick={() => handleEdit(item)} id="btn-edit">
