@@ -3,8 +3,6 @@
 A **full-stack MERN application** that allows an **admin** to manage portfolio content, including **Home, Academics, Achievements, Publications, Conferences, and Gallery**.
 
 🚀 **Live Demo**: [Click Here](https://pdinesh.vercel.app/)  
-📺 **Video Demo**: [Watch Here](#demo-video)  
-📸 **Screenshots**: [See Below](#screenshots)  
 
 ---
 
@@ -25,19 +23,21 @@ A **full-stack MERN application** that allows an **admin** to manage portfolio c
 ## 🌟 **UI Preview**
 ### 📸 **Screenshots**
 #### 🔐 **Admin Login**
-![Admin Login](https://via.placeholder.com/800x400?text=Admin+Login)
 
 #### 📊 **Admin Dashboard**
-![Admin Dashboard](https://via.placeholder.com/800x400?text=Admin+Dashboard)
+[![Admin Dashboard Stats](https://via.placeholder.com/800x400?text=Admin+Dashboard)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview(1).png)
 
-#### 🖼 **Gallery Management**
-![Gallery Management](https://via.placeholder.com/800x400?text=Gallery+Management)
+#### 🖼 **Academics Management**
+[![Academics Management](https://via.placeholder.com/800x400?text=Gallery+Management)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview(2).png)
 
----
+#### 🔐 **Admin Profile**
+[![Admin Profile](https://via.placeholder.com/800x400?text=Admin+Login)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview(1).png)
 
-## 🎥 **Demo Video**
-[![Watch Demo](https://via.placeholder.com/800x400?text=Click+to+Watch+Demo)](https://your-demo-video-link.com)
+#### 📸 **Publications  Management**
+[![Publications Management](https://via.placeholder.com/800x400?text=Admin+Login)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview(1).png)
 
+#### 🌟 **Achievements Management**
+[![Achievements Management](https://via.placeholder.com/800x400?text=Gallery+Management)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview(5).png)
 ---
 
 ## 🛠 **Tech Stack**
@@ -61,8 +61,8 @@ A **full-stack MERN application** that allows an **admin** to manage portfolio c
 ## 🔥 **Setup Instructions**
 ### **1️⃣ Clone the Repository**
 ```sh
-git clone https://github.com/your-username/portfolio-admin-panel.git
-cd portfolio-admin-panel
+git clone https://github.com/satish30118/dinesh-portfolio.git
+cd dinesh-portfolio
 
 cd server
 npm install
@@ -71,9 +71,6 @@ npm install
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
-CLOUDINARY_CLOUD_NAME=your_cloudinary_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
 
 npm start
 
