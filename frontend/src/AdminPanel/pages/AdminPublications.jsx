@@ -101,7 +101,7 @@ export default function AdminPublications() {
             <p><strong>Authors:</strong> {item.authors}</p>
             <p><strong>Journal:</strong> {item.journal}</p>
             <p>
-              <strong>Read More:</strong>
+              <strong> Read More →</strong>
               <a href={item.link} target="_blank" rel="noopener noreferrer"> {item.link} </a>
             </p>
             <div className="action-buttons">

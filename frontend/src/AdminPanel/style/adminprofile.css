@@ -40,6 +40,14 @@
     margin-bottom: 10px;
   }
 
+  button {
+    padding: 7px 13px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
   .btn-save {
     background: #28a745;

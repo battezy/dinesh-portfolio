@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import { toast } from "react-toastify";
 import "../style/AdminDashboard.css";
 import axiosInstance from "../../utils/axiosInstance";
+import { FaBars } from "react-icons/fa"; // Mobile Menu Icon
 
 export default function AdminDashboard() {
   const [isAdmin, setIsAdmin] = useState(null);
@@ -38,7 +39,12 @@ export default function AdminDashboard() {
 
   return (
     <div className="admin-dashboard">
-      <Sidebar />
+      {/* Sidebar */}
+      <div className={`admin-leftbar`}>
+        <Sidebar />
+      </div>
+
+      {/* Main Content */}
       <div className="admin-content">
         <Outlet />
       </div>

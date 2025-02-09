@@ -13,7 +13,7 @@ import AcademicsModel from "../models/Academics.js";
 const router = express.Router();
 
 
-// **POST: Create Admin (One-time setup)**
+// // **POST: Create Admin (One-time setup)**
 // router.post("/register", async (req, res) => {
 //   const { name, email, password } = req.body;
 
