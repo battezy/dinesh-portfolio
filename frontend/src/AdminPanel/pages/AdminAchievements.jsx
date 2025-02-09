@@ -5,21 +5,28 @@ import "../style/adminachievements.css";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import axiosInstance from "../../utils/axiosInstance";
+import DotLoader from "../../utils/loader/DotLoader";
 
 export default function AdminAchievements() {
   const [achievements, setAchievements] = useState([]);
   const [formData, setFormData] = useState({ title: "" });
   const [editId, setEditId] = useState(null);
+  const [loader, setLoader] = useState(false)
+  const [btnLoader, setBtnLoader] = useState(false)
+
+
 
   useEffect(() => {
+    setLoader(true)
     axiosInstance.get("/achievements")
-      .then((res) => setAchievements(res.data))
-      .catch(() => toast.error("Error fetching achievements!"));
+      .then((res) => { setAchievements(res.data); setLoader(false) })
+      .catch(() => { toast.error("Error fetching achievements!"); setLoader(false) });
+
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setBtnLoader(true)
     if (editId) {
       await axiosInstance.put(`/achievements/${editId}`, formData);
       setEditId(null);
@@ -31,6 +38,7 @@ export default function AdminAchievements() {
 
     axiosInstance.get("/achievements").then((res) => setAchievements(res.data));
     setFormData({ title: "" });
+    setBtnLoader(false)
   };
 
   const handleDelete = async (id) => {
@@ -49,7 +57,7 @@ export default function AdminAchievements() {
         toast.success("Data deleted successfully!")
       }
     })
-    };
+  };
 
   const handleEdit = (item) => {
     setFormData(item);
@@ -69,11 +77,11 @@ export default function AdminAchievements() {
           onChange={(e) => setFormData({ title: e.target.value })}
           required
         />
-        <button type="submit">{editId ? "Update" : "Add"} Achievement</button>
+        <button type="submit" disabled={btnLoader}>{btnLoader ? <DotLoader /> : editId ? "Update Achievement" : "Add Achievement"} </button>
       </form>
 
       {/* List of Achievements */}
-      <ul>
+      {loader ? <DotLoader /> : <ul>
         {achievements.map((item) => (
           <li key={item._id}>
             <p><FaTrophy className="icon" /> {item.title}</p>
@@ -87,7 +95,8 @@ export default function AdminAchievements() {
             </div>
           </li>
         ))}
-      </ul>
+      </ul>}
+
     </div>
   );
 }

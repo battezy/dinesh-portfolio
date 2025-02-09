@@ -5,21 +5,27 @@ import "../style/adminConferences.css";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import axiosInstance from "../../utils/axiosInstance";
+import DotLoader from "../../utils/loader/DotLoader";
 
 export default function AdminConferences() {
   const [conferences, setConferences] = useState([]);
   const [formData, setFormData] = useState({ title: "", description: "" });
   const [editId, setEditId] = useState(null);
+  const [loader, setLoader] = useState(false)
+  const [btnLoader, setBtnLoader] = useState(false)
+
+
 
   useEffect(() => {
+    setLoader(true)
     axiosInstance.get("/conferences")
-      .then((res) => setConferences(res.data))
-      .catch(() => toast.error("Error fetching conferences!"));
-  }, []);
+      .then((res) => { setConferences(res.data); setLoader(false) })
+      .catch(() => { toast.error("Error fetching conferences!"); setLoader(false) });
 
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setBtnLoader(true)
     if (editId) {
       await axiosInstance.put(`/conferences/${editId}`, formData);
       setEditId(null);
@@ -32,6 +38,7 @@ export default function AdminConferences() {
 
     axiosInstance.get("/conferences").then((res) => setConferences(res.data));
     setFormData({ title: "", description: "" });
+    setBtnLoader(false)
   };
 
   const handleDelete = async (id) => {
@@ -76,11 +83,11 @@ export default function AdminConferences() {
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           required
         />
-        <button type="submit">{editId ? "Update" : "Add"} Conference</button>
+        <button type="submit">{btnLoader ? <DotLoader /> : editId ? "Update Conference" : "Add Conference"} </button>
       </form>
 
       {/* List of Conferences */}
-      <ul>
+      {loader ? <DotLoader /> : <ul>
         {conferences.map((item) => (
           <li key={item._id}>
             <h5><FaCalendarAlt className="icon" /> {item.title}</h5>
@@ -95,7 +102,7 @@ export default function AdminConferences() {
             </div>
           </li>
         ))}
-      </ul>
+      </ul>}
     </div>
   );
 }

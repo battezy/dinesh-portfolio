@@ -5,21 +5,27 @@ import "../style/adminpublications.css";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import axiosInstance from "../../utils/axiosInstance";
+import DotLoader from "../../utils/loader/DotLoader";
 
 export default function AdminPublications() {
   const [publications, setPublications] = useState([]);
   const [formData, setFormData] = useState({ title: "", authors: "", journal: "", link: "" });
   const [editId, setEditId] = useState(null);
+  const [loader, setLoader] = useState(false)
+  const [btnLoader, setBtnLoader] = useState(false)
+
+
 
   useEffect(() => {
+    setLoader(true)
     axiosInstance.get("/publications")
-      .then((res) => setPublications(res.data))
-      .catch(() => toast.error("Error fetching publications!"));
+      .then((res) => { setPublications(res.data); setLoader(false) })
+      .catch(() => { toast.error("Error fetching publications!"); setLoader(false) });
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setBtnLoader(true)
     if (editId) {
       await axiosInstance.put(`/publications/${editId}`, formData);
       setEditId(null);
@@ -31,6 +37,7 @@ export default function AdminPublications() {
 
     axiosInstance.get("/publications").then((res) => setPublications(res.data));
     setFormData({ title: "", authors: "", journal: "", link: "" });
+    setBtnLoader(false)
   };
 
   const handleDelete = async (id) => {
@@ -90,11 +97,11 @@ export default function AdminPublications() {
           onChange={(e) => setFormData({ ...formData, link: e.target.value })}
           required
         />
-        <button type="submit">{editId ? "Update" : "Add"} Publication</button>
+        <button type="submit">{btnLoader ? <DotLoader /> : editId ? "Update Publication" : "Add Publication"} </button>
       </form>
 
       {/* List of Publications */}
-      <ul>
+      {loader ? <DotLoader /> : <ul>
         {publications.map((item) => (
           <li key={item._id}>
             <h5><FaBookOpen className="icon" /> {item.title}</h5>
@@ -114,7 +121,7 @@ export default function AdminPublications() {
             </div>
           </li>
         ))}
-      </ul>
+      </ul>}
     </div>
   );
 }
