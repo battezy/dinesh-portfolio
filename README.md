@@ -23,21 +23,20 @@ A **full-stack MERN application** that allows an **admin** to manage portfolio c
 ## 🌟 **UI Preview**
 ### 📸 **Screenshots**
 #### 🔐 **Admin Login**
-
 #### 📊 **Admin Dashboard**
-[![Admin Dashboard Stats](https://via.placeholder.com/800x400?text=Admin+Dashboard)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview%20(1).png)
+[![Admin Dashboard Stats](https://raw.githubusercontent.com/battezy/dinesh-portfolio/main/frontend/public/assets/preview%20(1).png)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview%20(1).png)
 
 #### 🖼 **Academics Management**
-[![Academics Management](https://via.placeholder.com/800x400?text=Gallery+Management)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview(2).png)
+[![Academics Management](https://raw.githubusercontent.com/battezy/dinesh-portfolio/main/frontend/public/assets/preview%20(2).png)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview%20(2).png)
 
 #### 🔐 **Admin Profile**
-[![Admin Profile](https://via.placeholder.com/800x400?text=Admin+Login)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview(1).png)
+[![Admin Profile](https://raw.githubusercontent.com/battezy/dinesh-portfolio/main/frontend/public/assets/preview%20(3).png)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview%20(3).png)
 
-#### 📸 **Publications  Management**
-[![Publications Management](https://via.placeholder.com/800x400?text=Admin+Login)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview(1).png)
+#### 📸 **Publications Management**
+[![Publications Management](https://raw.githubusercontent.com/battezy/dinesh-portfolio/main/frontend/public/assets/preview%20(4).png)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview%20(4).png)
 
 #### 🌟 **Achievements Management**
-[![Achievements Management](https://via.placeholder.com/800x400?text=Gallery+Management)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview(5).png)
+[![Achievements Management](https://raw.githubusercontent.com/battezy/dinesh-portfolio/main/frontend/public/assets/preview%20(5).png)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview%20(5).png)
 
 ---
 
