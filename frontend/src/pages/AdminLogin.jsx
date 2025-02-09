@@ -20,7 +20,7 @@ export default function AdminLogin() {
       });
       sessionStorage.setItem("token", response.data.accessToken);
       // console.log(sessionStorage.getItem("token"))
-      navigate("/admin/dashboard");
+      navigate("/admin/dashboard/stats");
 
     } catch (err) {
       setError("Invalid Credentials. Try Again!");

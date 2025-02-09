@@ -43,7 +43,7 @@ export default function AdminStats() {
 
   return (
     <div className="admin-stats">
-      <h2>Admin Dashboard Stats</h2>
+      <h2>Admin Dashboard</h2>
 
       <div className="stats-container">
         <div className="stat-card"><FaUsersCog className="stat-icon" /><h3>{stats.totalAcademics}</h3><p>Academics</p></div>
