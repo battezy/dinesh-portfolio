@@ -3,6 +3,7 @@ import { FaTrash, } from "react-icons/fa";
 import axios from "axios";
 import "../style/admingallery.css";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function AdminGallery() {
   const [images, setImages] = useState([]);
@@ -37,10 +38,22 @@ export default function AdminGallery() {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/api/gallery/${id}`);
-    setImages(images.filter((img) => img._id !== id));
-    toast.delete("Data deleted successfully!")
-    
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axios.delete(`http://localhost:5000/api/gallery/${id}`);
+        setImages(images.filter((img) => img._id !== id));
+        toast.success("Image deleted successfully!")
+      }
+    })
+
   };
 
   return (
@@ -48,14 +61,14 @@ export default function AdminGallery() {
       <h2>Manage Gallery</h2>
 
       {/* Upload Image */}
-      <input type="file" onChange={handleFileChange} />
+      <input type="file" accept="image/*" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload Image</button>
 
       {/* Display Images */}
       <div className="gallery-grid">
         {images.map((img) => (
           <div key={img._id} className="gallery-item">
-            <img src={img.imageUrl} alt="Gallery" />
+            <img src={img.imageUrl} alt="Gallery" loading="lazy" />
             <button onClick={() => handleDelete(img._id)} id="btn-delete"><FaTrash className="icon" /></button>
           </div>
         ))}

@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaEdit, FaTrash, FaTrophy } from "react-icons/fa"; // Importing icons
 import "../style/adminachievements.css";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function AdminAchievements() {
   const [achievements, setAchievements] = useState([]);
@@ -24,6 +25,7 @@ export default function AdminAchievements() {
       toast.success("Data updated successfully!")
     } else {
       await axios.post("http://localhost:5000/api/achievements", formData);
+      toast.success("New achievement added!");
     }
 
     axios.get("http://localhost:5000/api/achievements").then((res) => setAchievements(res.data));
@@ -31,10 +33,22 @@ export default function AdminAchievements() {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/api/achievements/${id}`);
-    setAchievements(achievements.filter((item) => item._id !== id));
-    toast.delete("Data deleted successfully!")
-  };
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axios.delete(`http://localhost:5000/api/achievements/${id}`);
+        setAchievements(achievements.filter((item) => item._id !== id));
+        toast.success("Data deleted successfully!")
+      }
+    })
+    };
 
   const handleEdit = (item) => {
     setFormData(item);

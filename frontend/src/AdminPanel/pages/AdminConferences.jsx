@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaEdit, FaTrash, FaCalendarAlt } from "react-icons/fa"; // Importing icons
 import "../style/adminconferences.css";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function AdminConferences() {
   const [conferences, setConferences] = useState([]);
@@ -22,9 +23,10 @@ export default function AdminConferences() {
       await axios.put(`http://localhost:5000/api/conferences/${editId}`, formData);
       setEditId(null);
       toast.success("Data updated successfully!")
-      
+
     } else {
       await axios.post("http://localhost:5000/api/conferences", formData);
+      toast.success("New data added!");
     }
 
     axios.get("http://localhost:5000/api/conferences").then((res) => setConferences(res.data));
@@ -32,8 +34,21 @@ export default function AdminConferences() {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/api/conferences/${id}`);
-    setConferences(conferences.filter((item) => item._id !== id));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axios.delete(`http://localhost:5000/api/conferences/${id}`);
+        setConferences(conferences.filter((item) => item._id !== id));
+        toast.success("Data deleted successfully!")
+      }
+    })
   };
 
   const handleEdit = (item) => {

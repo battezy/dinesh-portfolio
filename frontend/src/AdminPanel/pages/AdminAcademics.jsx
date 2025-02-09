@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaEdit, FaTrash, FaGraduationCap } from "react-icons/fa"; // Importing icons
+import { FaEdit, FaTrash, FaGraduationCap } from "react-icons/fa";
+import Swal from "sweetalert2";
 import "../style/adminacademics.css";
 import { toast } from "react-toastify";
 
@@ -21,10 +22,10 @@ export default function AdminAcademics() {
     if (editId) {
       await axios.put(`http://localhost:5000/api/academics/${editId}`, formData);
       setEditId(null);
-      toast.success("Data updated successfully!")
-      
+      toast.success("Data updated successfully!");
     } else {
       await axios.post("http://localhost:5000/api/academics", formData);
+      toast.success("New degree added!");
     }
 
     axios.get("http://localhost:5000/api/academics").then((res) => setAcademics(res.data));
@@ -32,8 +33,21 @@ export default function AdminAcademics() {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/api/academics/${id}`);
-    setAcademics(academics.filter((item) => item._id !== id));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axios.delete(`http://localhost:5000/api/academics/${id}`);
+        setAcademics(academics.filter((item) => item._id !== id));
+        toast.success("Degree deleted successfully!");
+      }
+    });
   };
 
   const handleEdit = (item) => {
