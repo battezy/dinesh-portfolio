@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { FaSave } from "react-icons/fa"; // Save Icon
+import "../style/adminhome.css"; // Import Styles
 
 export default function AdminHome() {
-  const [homeData, setHomeData] = useState({ images: ["", ""], about: "" });
-  const [imagePreview, setImagePreview] = useState(["", ""]);
+  const [homeData, setHomeData] = useState({ image: "", about: "" });
+  const [imagePreview, setImagePreview] = useState("");
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/home").then((res) => {
       setHomeData(res.data);
-      setImagePreview(res.data.images);
+      setImagePreview(res.data.image);
     });
   }, []);
 
-  const handleImageUpload = async (event, index) => {
+  const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
@@ -22,10 +24,9 @@ export default function AdminHome() {
 
     try {
       const res = await axios.post("http://localhost:5000/api/upload", formData);
-      const newImages = [...homeData.images];
-      newImages[index] = res.data.imageUrl;
-      setHomeData({ ...homeData, images: newImages });
-      setImagePreview(newImages);
+      setHomeData({ ...homeData, image: res.data.imageUrl });
+      setImagePreview(res.data.imageUrl);
+      toast.success("Image uploaded successfully!");
     } catch (err) {
       toast.error("Image upload failed!");
     }
@@ -42,22 +43,26 @@ export default function AdminHome() {
       <h2>Manage Home Page</h2>
 
       {/* Image Upload & Preview */}
-      {[0, 1].map((index) => (
-        <div key={index}>
-          <label>Image {index + 1}:</label>
-          <input type="file" onChange={(e) => handleImageUpload(e, index)} />
-          {imagePreview[index] && <img src={imagePreview[index]} alt={`Preview ${index + 1}`} />}
-        </div>
-      ))}
-
+      <div className="image-box">
+        <label>Upload Home Image:</label>
+        <input type="file" accept="image/*" onChange={handleImageUpload} />
+        {imagePreview && <img src={imagePreview} alt="Preview" className="preview-img" />}
+      </div>
+      <br />
       {/* About Text */}
-      <label>About Text:</label>
-      <textarea
-        value={homeData.about}
-        onChange={(e) => setHomeData({ ...homeData, about: e.target.value })}
-      />
+      <div className="about-section">
+        <label>About Text:</label>
+        <textarea
+          value={homeData.about}
+          onChange={(e) => setHomeData({ ...homeData, about: e.target.value })}
+          placeholder="Write about yourself..."
+          required
+        />
+      </div>
 
-      <button onClick={handleUpdate}>Update Home</button>
+      <button onClick={handleUpdate} className="btn-save">
+        <FaSave /> Update Home
+      </button>
     </div>
   );
 }

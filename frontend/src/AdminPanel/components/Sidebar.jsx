@@ -25,7 +25,7 @@ export default function Sidebar() {
         <li><Link to="/admin/dashboard/publications">Publications</Link></li>
         <li><Link to="/admin/dashboard/conferences">Conferences</Link></li>
         <li><Link to="/admin/dashboard/gallery">Gallery</Link></li>
-
+        <li><Link to="/admin/dashboard/profile">Profile</Link></li>
         <button className="logout" onClick={handleLogout}>Logout</button>
       </ul>
     </div>

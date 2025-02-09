@@ -13,8 +13,8 @@ import AdminAcademics from "./AdminPanel/pages/AdminAcademics";
 import AdminAchievements from "./AdminPanel/pages/AdminAchievements";
 import AdminPublications from "./AdminPanel/pages/AdminPublications";
 import AdminConferences from "./AdminPanel/pages/AdminConferences";
-import AdminGallery from "./AdminPanel/pages/AdminGallery";
-import AdminUsers from "./AdminPanel/pages/AdminUsers";
+import AdminGallery from "./AdminPanel/pages/AdminGallery"; 
+import AdminProfile from "./AdminPanel/pages/AdminProfile";
 
 function App() {
   return (
@@ -41,7 +41,7 @@ function App() {
           <Route path="publications" element={<AdminPublications />} />
           <Route path="conferences" element={<AdminConferences />} />
           <Route path="gallery" element={<AdminGallery/>} />
-          <Route path="users" element={<AdminUsers/>} />
+          <Route path="profile" element={<AdminProfile/>} />
 
         </Route>
       </Routes>
