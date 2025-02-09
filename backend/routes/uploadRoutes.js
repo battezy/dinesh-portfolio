@@ -1,36 +1,41 @@
 import express from "express";
 import multer from "multer";
-import { v2 as cloudinary } from "cloudinary";
-import { CloudinaryStorage } from "multer-storage-cloudinary";
-import dotenv from "dotenv";
+import path from "path";
+import fs from "fs";
 
-dotenv.config();
+const router = express.Router();
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+// Ensure `uploads/` directory exists
+const uploadDir = path.join("uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "portfolio_images", // Folder in Cloudinary
-    format: async () => "png", // File format
-    public_id: (req, file) => file.originalname.split(".")[0],
+// Multer Disk Storage (Local Folder)
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); 
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
   },
 });
 
 const upload = multer({ storage });
 
-const router = express.Router();
-
+// Upload Route
 router.post("/", upload.single("image"), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded!" });
   }
 
-  res.json({ imageUrl: req.file.path || req.file.url });
+  // Generate Image URL
+  const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+
+  res.json({ imageUrl });
 });
+
+// Serve Uploaded Images as Static Files
+router.use("/uploads", express.static("uploads"));
 
 export default router;

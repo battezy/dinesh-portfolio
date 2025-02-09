@@ -16,6 +16,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+// Serve Static Images
+app.use("/uploads", express.static("uploads"));
+
 
 // API Routes
 app.use("/api/admin", adminRoutes);

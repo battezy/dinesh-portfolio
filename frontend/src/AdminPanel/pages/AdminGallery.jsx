@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FaTrash, } from "react-icons/fa";
 import axios from "axios";
 import "../style/admingallery.css";
 import { toast } from "react-toastify";
@@ -55,7 +56,7 @@ export default function AdminGallery() {
         {images.map((img) => (
           <div key={img._id} className="gallery-item">
             <img src={img.imageUrl} alt="Gallery" />
-            <button onClick={() => handleDelete(img._id)}>Delete</button>
+            <button onClick={() => handleDelete(img._id)} id="btn-delete"><FaTrash className="icon" /></button>
           </div>
         ))}
       </div>
