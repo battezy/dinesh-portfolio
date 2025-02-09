@@ -10,7 +10,7 @@ export default function AdminDashboard() {
     <div className="admin-dashboard">
       <Sidebar />
       <div className="admin-content">
-        <h1>Admin Dashboard</h1>
+        {/* <h1>Admin Dashboard</h1> */}
         <Outlet /> {/* Nested Routes (Home, Academics, Achievements) */}
       </div>
     </div>
