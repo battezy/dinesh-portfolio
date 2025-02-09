@@ -1,22 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../style/publication.css";
+import axiosInstance from "../utils/axiosInstance";
 
-const publications = [
-  {
-    title: "Hybrid Electrolyte with Biomass-Derived Carbon Host for High-Performance Aqueous Zn-S Battery",
-    authors: "Dinesh Patel, Abhishek Dharmesh, Yash Sharma, Poonam Rani, and Ashwini Kumar Sharma",
-    journal: "Chemical Engineering Journal, 479, 2024, 147722",
-    link: "https://doi.org/10.1016/j.cej.2023.147722",
-  },
-  {
-    title: "Minireview on Aqueous Zinc–Sulfur Batteries: Recent Advances and Future Perspectives",
-    authors: "Dinesh Patel and Ashwini Kumar Sharma",
-    journal: "Energy & Fuels, 37 (15) 2023, 10897-10914",
-    link: "https://doi.org/10.1021/acs.energyfuels.3c01938",
-  },
-];
+// const publications = [
+//   {
+//     title: "Hybrid Electrolyte with Biomass-Derived Carbon Host for High-Performance Aqueous Zn-S Battery",
+//     authors: "Dinesh Patel, Abhishek Dharmesh, Yash Sharma, Poonam Rani, and Ashwini Kumar Sharma",
+//     journal: "Chemical Engineering Journal, 479, 2024, 147722",
+//     link: "https://doi.org/10.1016/j.cej.2023.147722",
+//   },
+//   {
+//     title: "Minireview on Aqueous Zinc–Sulfur Batteries: Recent Advances and Future Perspectives",
+//     authors: "Dinesh Patel and Ashwini Kumar Sharma",
+//     journal: "Energy & Fuels, 37 (15) 2023, 10897-10914",
+//     link: "https://doi.org/10.1021/acs.energyfuels.3c01938",
+//   },
+// ];
 
 export default function Publication() {
+  const [publications, setPublications] = useState([]);
+
+  useEffect(() => {
+    axiosInstance.get("/publications")
+      .then((res) => setPublications(res.data))
+      .catch(() => toast.error("Error fetching publications!"));
+  }, []);
   return (
     <div className="publication-container">
       <header className="publication-header">

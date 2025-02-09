@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../style/gallery.css"; 
+import axiosInstance from "../utils/axiosInstance";
 
-const images = [
-  "../assets/gallery/g3.jpeg",
-  "../assets/gallery/g1.jpeg",
-  "../assets/gallery/g2.jpeg",
-  "../assets/gallery/g4.jpeg",
-];
+// const images = [
+//   "../assets/gallery/g3.jpeg",
+//   "../assets/gallery/g1.jpeg",
+//   "../assets/gallery/g2.jpeg",
+//   "../assets/gallery/g4.jpeg",
+// ];
 
 export default function Gallery() {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    axiosInstance.get("/gallery")
+      .then((res) => setImages(res.data))
+      .catch(() => toast.error("Error fetching images!"));
+  }, []);
   return (
     <div className="gallery-container">
       <header className="gallery-header">
@@ -23,7 +31,7 @@ export default function Gallery() {
       <section className="gallery-grid">
         {images.map((src, index) => (
           <div key={index} className="gallery-item">
-            <img src={src} alt={`Gallery Image ${index + 1}`} loading="lazy" />
+            <img src={src?.imageUrl} alt={`Gallery Image ${index + 1}`} loading="lazy" />
           </div>
         ))}
       </section>

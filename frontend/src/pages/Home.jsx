@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../style/home.css"; // Import CSS file
+import axiosInstance from "../utils/axiosInstance";
 
 export default function Home() {
+  const [homeData, setHomeData] = useState({ image: "", about: "" });
+  useEffect(() => {
+    axiosInstance.get("/home").then((res) => {
+      setHomeData(res.data);
+    });
+  }, []);
   return (
     <div className="home-container">
       <header className="home-header">
@@ -16,10 +23,10 @@ export default function Home() {
 
       <section className="home-content">
         <div className="image-box">
-          <img src="./assets/dinesh.JPG" alt="Dinesh Patel" loading="lazy" />
+          <img src={homeData?.image} alt="Dinesh Patel" loading="lazy" />
         </div>
         <div className="text-box">
-          <p>
+          {/* <p>
             My name is <strong>Dinesh Patel</strong>, and I am currently pursuing a{" "}
             <strong>Ph.D. at the Indian Institute of Technology Roorkee (IIT Roorkee)</strong> under the guidance of{" "}
             <a
@@ -30,7 +37,8 @@ export default function Home() {
               Prof. Ashwini Kumar Sharma
             </a>
             . I am currently working in the area of <strong>aqueous Zinc battery</strong>.
-          </p>
+          </p> */}
+          <p>{homeData.about}</p>
         </div>
       </section>
     </div>
