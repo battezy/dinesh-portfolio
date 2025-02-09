@@ -12,28 +12,80 @@ import AcademicsModel from "../models/Academics.js";
 
 const router = express.Router();
 
-// Admin Login
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+
+// **POST: Create Admin (One-time setup)**
+router.post("/register", async (req, res) => {
+  const { name, email, password } = req.body;
 
   try {
-    const admin = await AdminModel.findOne({ email });
-    if (!admin) return res.status(400).json({ message: "Admin not found!" });
+    const existingAdmin = await AdminModel.findOne({ email });
+    if (existingAdmin) {
+      return res.status(400).json({ message: "Admin already exists!" });
+    }
 
-    const isMatch = await bcrypt.compare(password, admin.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid credentials!" });
+    // **Create New Admin**
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newAdmin = new AdminModel({ name, email, password: hashedPassword });
+    await newAdmin.save();
 
-    const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
-
-    res.json({ token });
+    res.status(201).json({ message: "Admin created successfully!" });
   } catch (error) {
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ message: "Server Error: Could not create admin." });
   }
 });
 
-// Protected Route Example
+
+
+// Admin Login
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const admin = await AdminModel.findOne({ email });
+
+  if (!admin) return res.status(401).json({ message: "Invalid Credentials" });
+
+  const isMatch = await bcrypt.compare(password, admin.password);
+  if (!isMatch) return res.status(401).json({ message: "Invalid Credentials" });
+
+  // **Generate Access & Refresh Tokens**
+  const accessToken = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: "15m" });
+  const refreshToken = jwt.sign({ id: admin._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: "7d" });
+  // **Set Refresh Token in HTTP-Only Cookie**
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  });
+
+  res.json({ accessToken });
+});
+
+
+// **2️⃣ REFRESH TOKEN API (Generate New Access Token)**
+router.post("/refresh-token", (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+
+  if (!refreshToken) return res.status(403).json({ message: "No refresh token provided" });
+
+  jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, decoded) => {
+    if (err) return res.status(403).json({ message: "Invalid Refresh Token" });
+
+    const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET, { expiresIn: "15m" });
+
+    res.json({ accessToken: newAccessToken });
+  });
+});
+
+// **3️⃣ LOGOUT API (Clear Refresh Token)**
+router.post("/logout", (req, res) => {
+  res.clearCookie("refreshToken");
+  res.json({ message: "Logged out successfully!" });
+});
+
+
+
+// Protected Route Verification
 router.get("/dashboard", verifyToken, (req, res) => {
-  res.json({ success: true, message: "Welcome to Admin Dashboard!" });
+  res.json({ isAdmin: true });
 });
 
 // Get Admin Profile
@@ -81,7 +133,7 @@ router.put("/change-password", verifyToken, async (req, res) => {
 
 
 // Get Admin Dashboard Stats
-router.get("/stats", async (req, res) => {
+router.get("/stats", verifyToken, async (req, res) => {
   try {
     const totalAcademics = await AcademicsModel.countDocuments();
     const totalAchievements = await AchievementModel.countDocuments();
