@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "../style/gallery.css"; 
+import "../style/gallery.css";
 import axiosInstance from "../utils/axiosInstance";
+import Spinner from "../utils/loader/Spinner";
 
 // const images = [
 //   "../assets/gallery/g3.jpeg",
@@ -11,11 +12,15 @@ import axiosInstance from "../utils/axiosInstance";
 
 export default function Gallery() {
   const [images, setImages] = useState([]);
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
+    setLoader(true)
     axiosInstance.get("/gallery")
       .then((res) => setImages(res.data))
       .catch(() => toast.error("Error fetching images!"));
+    setLoader(false)
+
   }, []);
   return (
     <div className="gallery-container">
@@ -27,14 +32,14 @@ export default function Gallery() {
           alt="Gallery"
         />
       </header>
-
-      <section className="gallery-grid">
+      {loader ? <Spinner /> : <section className="gallery-grid">
         {images.map((src, index) => (
           <div key={index} className="gallery-item">
             <img src={src?.imageUrl} alt={`Gallery Image ${index + 1}`} loading="lazy" />
           </div>
         ))}
-      </section>
+      </section>}
+
     </div>
   );
 }

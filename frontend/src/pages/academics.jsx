@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../style/academics.css";
 import axiosInstance from "../utils/axiosInstance";
+import Spinner from "../utils/loader/Spinner";
 
 // const academicData = [
 //   {
@@ -25,10 +26,13 @@ import axiosInstance from "../utils/axiosInstance";
 
 export default function Academics() {
   const [academicData, setAcademicData] = useState([]);
+  const [loader, setLoader] = useState(false)
   useEffect(() => {
+    setLoader(true)
     axiosInstance.get("/academics")
       .then((res) => setAcademicData(res.data))
       .catch(() => toast.error("Error fetching academics!"));
+    setLoader(false)
   }, []);
   return (
     <div className="academics-container">
@@ -41,8 +45,7 @@ export default function Academics() {
           loading="lazy"
         />
       </header>
-
-      <section className="academics-list">
+      {loader ? <Spinner /> : <section className="academics-list">
         {academicData.map((item, index) => (
           <div key={index} className="academic-item">
             <h3>{item.degree} <span className="acad-timeline">[{item.timeline}]</span></h3>
@@ -50,7 +53,8 @@ export default function Academics() {
             <p className="cgpa">CGPA: {item.cgpa}</p>
           </div>
         ))}
-      </section>
+      </section>}
+
     </div>
   );
 }

@@ -16,6 +16,7 @@ import AdminConferences from "./AdminPanel/pages/AdminConferences";
 import AdminGallery from "./AdminPanel/pages/AdminGallery"; 
 import AdminProfile from "./AdminPanel/pages/AdminProfile";
 import AdminStats from "./AdminPanel/pages/AdminStats";
+import NotFound from "./utils/NotFound/NotFound";
 
 function App() {
   return (
@@ -44,9 +45,9 @@ function App() {
           <Route path="gallery" element={<AdminGallery/>} />
           <Route path="profile" element={<AdminProfile/>} />
           <Route path="stats" element={<AdminStats/>} />
-
-
         </Route>
+        <Route path="*" element={< NotFound/>} />
+
       </Routes>
     </BrowserRouter>
   );

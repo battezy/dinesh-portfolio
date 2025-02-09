@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "../style/home.css"; // Import CSS file
 import axiosInstance from "../utils/axiosInstance";
+import Spinner from "../utils/loader/Spinner";
 
 export default function Home() {
   const [homeData, setHomeData] = useState({ image: "", about: "" });
+  const [loader, setLoader] = useState(false)
+
   useEffect(() => {
+    setLoader(true)
     axiosInstance.get("/home").then((res) => {
       setHomeData(res.data);
     });
+    setLoader(false)
+
   }, []);
   return (
     <div className="home-container">
@@ -20,8 +26,7 @@ export default function Home() {
           loading="lazy"
         />
       </header>
-
-      <section className="home-content">
+      {loader ? <Spinner /> : <section className="home-content">
         <div className="image-box">
           <img src={homeData?.image} alt="Dinesh Patel" loading="lazy" />
         </div>
@@ -40,7 +45,8 @@ export default function Home() {
           </p> */}
           <p>{homeData.about}</p>
         </div>
-      </section>
+      </section>}
+
     </div>
   );
 }

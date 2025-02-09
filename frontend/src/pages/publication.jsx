@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../style/publication.css";
 import axiosInstance from "../utils/axiosInstance";
+import Spinner from "../utils/loader/Spinner";
 
 // const publications = [
 //   {
@@ -19,11 +20,14 @@ import axiosInstance from "../utils/axiosInstance";
 
 export default function Publication() {
   const [publications, setPublications] = useState([]);
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
+    setLoader(true)
     axiosInstance.get("/publications")
       .then((res) => setPublications(res.data))
       .catch(() => toast.error("Error fetching publications!"));
+    setLoader(false)
   }, []);
   return (
     <div className="publication-container">
@@ -36,19 +40,21 @@ export default function Publication() {
           loading="lazy"
         />
       </header>
+      {
+        loader ? <Spinner /> : <section className="publication-list">
+          {publications.map((pub, index) => (
+            <div key={index} className="publication-item">
+              <h3>{pub.title}</h3>
+              <p><strong>Authors:</strong> {pub.authors}</p>
+              <p><strong>Journal:</strong> {pub.journal}</p>
+              <a href={pub.link} target="_blank" rel="noopener noreferrer">
+                Read More →
+              </a>
+            </div>
+          ))}
+        </section>
+      }
 
-      <section className="publication-list">
-        {publications.map((pub, index) => (
-          <div key={index} className="publication-item">
-            <h3>{pub.title}</h3>
-            <p><strong>Authors:</strong> {pub.authors}</p>
-            <p><strong>Journal:</strong> {pub.journal}</p>
-            <a href={pub.link} target="_blank" rel="noopener noreferrer">
-              Read More →
-            </a>
-          </div>
-        ))}
-      </section>
     </div>
   );
 }

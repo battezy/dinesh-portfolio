@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../style/conference.css";
 import axiosInstance from "../utils/axiosInstance";
+import Spinner from "../utils/loader/Spinner";
 
 // const conferenceData = [
 //   {
@@ -32,11 +33,15 @@ import axiosInstance from "../utils/axiosInstance";
 
 export default function Conference() {
   const [conferenceData, setConferences] = useState([]);
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
+    setLoader(true)
     axiosInstance.get("/conferences")
       .then((res) => setConferences(res.data))
       .catch(() => toast.error("Error fetching conferences!"));
+    setLoader(false)
+
   }, []);
   return (
     <div className="conference-container">
@@ -49,15 +54,15 @@ export default function Conference() {
           loading="lazy"
         />
       </header>
-
-      <section className="conference-list">
+      {loader ? <Spinner /> : <section className="conference-list">
         {conferenceData.map((conf, index) => (
           <div key={index} className="conference-item">
             <h3>{conf.title}</h3>
             <p>{conf.description}</p>
           </div>
         ))}
-      </section>
+      </section>}
+
     </div>
   );
 }

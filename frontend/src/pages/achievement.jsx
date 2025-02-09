@@ -1,6 +1,7 @@
 import React, { use, useEffect, useState } from "react";
 import "../style/achievement.css"; // Import external CSS
 import axiosInstance from "../utils/axiosInstance";
+import Spinner from "../utils/loader/Spinner";
 
 // const achievements = [
 //   "Recipient of India’s prestigious Ph.D. fellowship, Prime Minister Research Fellowship.",
@@ -12,10 +13,15 @@ import axiosInstance from "../utils/axiosInstance";
 
 export default function Achievement() {
   const [achievements, setAchievements] = useState([]);
+  const [loader, setLoader] = useState(false)
+
   useEffect(() => {
+    setLoader(true)
     axiosInstance.get("/achievements")
       .then((res) => setAchievements(res.data))
       .catch(() => toast.error("Error fetching achievements!"));
+    setLoader(false)
+
   }, []);
   return (
     <div className="achievement-container">
@@ -28,15 +34,15 @@ export default function Achievement() {
           loading="lazy"
         />
       </header>
-
-      <section className="achievement-list">
+      {loader ? <Spinner /> : <section className="achievement-list">
         {achievements.map((award) => (
           <div key={award._id} className="achievement-item">
             <span className="award-icon">🏆</span>
             <p>{award.title}</p>
           </div>
         ))}
-      </section>
+      </section>}
+
     </div>
   );
 }
