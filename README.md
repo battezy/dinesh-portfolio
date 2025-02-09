@@ -25,7 +25,7 @@ A **full-stack MERN application** that allows an **admin** to manage portfolio c
 #### 🔐 **Admin Login**
 
 #### 📊 **Admin Dashboard**
-[![Admin Dashboard Stats](https://via.placeholder.com/800x400?text=Admin+Dashboard)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview(1).png)
+[![Admin Dashboard Stats](https://via.placeholder.com/800x400?text=Admin+Dashboard)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview%20(1).png)
 
 #### 🖼 **Academics Management**
 [![Academics Management](https://via.placeholder.com/800x400?text=Gallery+Management)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview(2).png)
@@ -38,6 +38,7 @@ A **full-stack MERN application** that allows an **admin** to manage portfolio c
 
 #### 🌟 **Achievements Management**
 [![Achievements Management](https://via.placeholder.com/800x400?text=Gallery+Management)](https://github.com/battezy/dinesh-portfolio/blob/main/frontend/public/assets/preview(5).png)
+
 ---
 
 ## 🛠 **Tech Stack**
