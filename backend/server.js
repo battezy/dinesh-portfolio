@@ -15,7 +15,12 @@ import galleryRoutes from "./routes/galleryRoutes.js";
 dotenv.config();
 const app = express();
 
-app.use(cors());
+app.use(
+    cors({
+        origin: process.env.baseURL || "http://localhost:5173",
+        credentials: true,
+    })
+);
 app.use(express.json());
 // Serve Static Images
 app.use("/uploads", express.static("uploads"));

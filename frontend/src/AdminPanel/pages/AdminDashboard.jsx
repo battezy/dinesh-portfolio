@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import axios from "axios";
-import "../style/AdminDashboard.css";
 import { toast } from "react-toastify";
+import "../style/AdminDashboard.css";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function AdminDashboard() {
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      toast.error("Session Expired! Please login again.");
+      navigate("/admin/login");
+      return;
+    }
 
-    axios.get("http://localhost:5000/api/admin/dashboard", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    axiosInstance.get("/admin/dashboard")
       .then((res) => {
         if (res.data.isAdmin) {
           setIsAdmin(true);
         } else {
-          toast.error("Session Expired! Please login again.");
+          toast.error("Access Denied!");
           navigate("/admin/login");
         }
       })
@@ -30,7 +33,7 @@ export default function AdminDashboard() {
   }, [navigate]);
 
   if (isAdmin === null) {
-    return <h2>Verifying Admin...</h2>; // Loading State
+    return <h2>Verifying Admin...</h2>;
   }
 
   return (

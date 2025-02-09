@@ -2,13 +2,17 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaHome, FaUserGraduate, FaTrophy, FaBook, FaUsers, FaImages, FaUser, FaSignOutAlt, FaChartBar } from "react-icons/fa"; // Import Icons
 import "./Sidebar.css";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function Sidebar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/admin/login");
+    axiosInstance.post("/admin/logout", {}, { withCredentials: true })
+      .then(() => {
+        sessionStorage.removeItem("token");
+        navigate("/admin/login");
+      });
   };
 
   return (
@@ -23,10 +27,7 @@ export default function Sidebar() {
         <li><Link to="/admin/dashboard/gallery"><FaImages /> Gallery</Link></li>
         <li><Link to="/admin/dashboard/stats"><FaChartBar /> Stats</Link></li>
         <li><Link to="/admin/dashboard/profile"><FaUser /> Profile</Link></li>
-
-
       </ul>
-
       <button className="logout" onClick={handleLogout}>
         <FaSignOutAlt /> Logout
       </button>
