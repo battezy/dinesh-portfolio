@@ -4,6 +4,7 @@ import { FaEdit, FaTrash, FaGraduationCap } from "react-icons/fa";
 import Swal from "sweetalert2";
 import "../style/adminacademics.css";
 import { toast } from "react-toastify";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function AdminAcademics() {
   const [academics, setAcademics] = useState([]);
@@ -11,7 +12,7 @@ export default function AdminAcademics() {
   const [editId, setEditId] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/academics")
+    axiosInstance.get("/academics")
       .then((res) => setAcademics(res.data))
       .catch(() => toast.error("Error fetching academics!"));
   }, []);
@@ -20,15 +21,15 @@ export default function AdminAcademics() {
     e.preventDefault();
 
     if (editId) {
-      await axios.put(`http://localhost:5000/api/academics/${editId}`, formData);
+      await axiosInstance.put(`/academics/${editId}`, formData);
       setEditId(null);
       toast.success("Data updated successfully!");
     } else {
-      await axios.post("http://localhost:5000/api/academics", formData);
+      await axiosInstance.post("/academics", formData);
       toast.success("New degree added!");
     }
 
-    axios.get("http://localhost:5000/api/academics").then((res) => setAcademics(res.data));
+    axiosInstance.get("/academics").then((res) => setAcademics(res.data));
     setFormData({ degree: "", timeline: "", institute: "", cgpa: "" });
   };
 
@@ -43,7 +44,7 @@ export default function AdminAcademics() {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:5000/api/academics/${id}`);
+        await axiosInstance.delete(`/academics/${id}`);
         setAcademics(academics.filter((item) => item._id !== id));
         toast.success("Degree deleted successfully!");
       }

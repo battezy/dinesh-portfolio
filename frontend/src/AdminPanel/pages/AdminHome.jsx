@@ -3,13 +3,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { FaSave } from "react-icons/fa"; // Save Icon
 import "../style/adminhome.css"; // Import Styles
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function AdminHome() {
   const [homeData, setHomeData] = useState({ image: "", about: "" });
   const [imagePreview, setImagePreview] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/home").then((res) => {
+    axiosInstance.get("/home").then((res) => {
       setHomeData(res.data);
       setImagePreview(res.data.image);
     });
@@ -23,7 +24,7 @@ export default function AdminHome() {
     formData.append("image", file);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/upload", formData);
+      const res = await axiosInstance.post("/upload", formData);
       setHomeData({ ...homeData, image: res.data.imageUrl });
       setImagePreview(res.data.imageUrl);
       toast.success("Image uploaded successfully!");
@@ -33,7 +34,7 @@ export default function AdminHome() {
   };
 
   const handleUpdate = () => {
-    axios.put("http://localhost:5000/api/home", homeData)
+    axiosInstance.put("/home", homeData)
       .then(() => toast.success("Home updated successfully!"))
       .catch(() => toast.error("Update failed!"));
   };

@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 // Add New Publication (Protected)
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   try {
     const newPublication = new PublicationsModel(req.body);
     await newPublication.save();

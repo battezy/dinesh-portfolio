@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 // Add New Academic Record (Protected)
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   try {
     const newRecord = new AcademicsModel(req.body);
     await newRecord.save();

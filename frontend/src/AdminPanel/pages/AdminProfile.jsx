@@ -3,20 +3,21 @@ import axios from "axios";
 import { FaUserEdit, FaKey, FaSave } from "react-icons/fa"; // Icons
 import "../style/adminprofile.css"; // Import Styles
 import { toast } from "react-toastify";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function AdminProfile() {
   const [profile, setProfile] = useState({ name: "", email: "" });
   const [passwordData, setPasswordData] = useState({ oldPassword: "", newPassword: "" });
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/admin/profile", { withCredentials: true })
+    axiosInstance.get("/admin/profile", { withCredentials: true })
       .then((res) => setProfile(res.data))
       .catch(() => toast.error("Error fetching profile!"));
   }, []);
 
   const handleProfileUpdate = async () => {
     try {
-      await axios.put("http://localhost:5000/api/admin/profile", profile, { withCredentials: true });
+      await axiosInstance.put("/admin/profile", profile, { withCredentials: true });
       toast.success("Profile updated successfully!");
     } catch (error) {
       toast.error("Profile update failed!");
@@ -25,14 +26,14 @@ export default function AdminProfile() {
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
-    if (!passwordData.oldPassword || !passwordData.newPassword) return toast.error("Fill all fields!");
+    if (!passwordData.oldPassword || !passwordData.newPassword) return toast.warn("Fill all fields!");
 
     try {
-      await axios.put("http://localhost:5000/api/admin/change-password", passwordData, { withCredentials: true });
+      await axiosInstance.put("/admin/change-password", passwordData, { withCredentials: true });
       toast.success("Password changed successfully!");
       setPasswordData({ oldPassword: "", newPassword: "" });
     } catch (error) {
-      toast.error("Failed to update password!");
+      toast.error("Current password not matched!");
     }
   };
 

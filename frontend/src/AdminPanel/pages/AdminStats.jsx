@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaUsers, FaTrophy, FaBook, FaUsersCog, FaImages } from "react-icons/fa";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import "../style/adminstats.css";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function AdminStats() {
   const [stats, setStats] = useState({
@@ -14,7 +15,8 @@ export default function AdminStats() {
   });
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/admin/stats")
+    axiosInstance
+      .get("/admin/stats")
       .then((res) => setStats(res.data))
       .catch(() => console.error("Error fetching stats"));
   }, []);

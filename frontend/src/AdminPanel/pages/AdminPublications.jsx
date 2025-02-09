@@ -4,6 +4,7 @@ import { FaEdit, FaTrash, FaBookOpen } from "react-icons/fa"; // Importing icons
 import "../style/adminpublications.css";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function AdminPublications() {
   const [publications, setPublications] = useState([]);
@@ -11,7 +12,7 @@ export default function AdminPublications() {
   const [editId, setEditId] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/publications")
+    axiosInstance.get("/publications")
       .then((res) => setPublications(res.data))
       .catch(() => toast.error("Error fetching publications!"));
   }, []);
@@ -20,15 +21,15 @@ export default function AdminPublications() {
     e.preventDefault();
 
     if (editId) {
-      await axios.put(`http://localhost:5000/api/publications/${editId}`, formData);
+      await axiosInstance.put(`/publications/${editId}`, formData);
       setEditId(null);
       toast.success("Data updated successfully!")
 
     } else {
-      await axios.post("http://localhost:5000/api/publications", formData);
+      await axiosInstance.post("/publications", formData);
     }
 
-    axios.get("http://localhost:5000/api/publications").then((res) => setPublications(res.data));
+    axiosInstance.get("/publications").then((res) => setPublications(res.data));
     setFormData({ title: "", authors: "", journal: "", link: "" });
   };
 
@@ -43,7 +44,7 @@ export default function AdminPublications() {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:5000/api/publications/${id}`);
+        await axiosInstance.delete(`/publications/${id}`);
         setPublications(publications.filter((item) => item._id !== id));
         toast.success("Data deleted successfully!")
       }

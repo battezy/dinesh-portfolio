@@ -4,6 +4,7 @@ import { FaEdit, FaTrash, FaTrophy } from "react-icons/fa"; // Importing icons
 import "../style/adminachievements.css";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function AdminAchievements() {
   const [achievements, setAchievements] = useState([]);
@@ -11,7 +12,7 @@ export default function AdminAchievements() {
   const [editId, setEditId] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/achievements")
+    axiosInstance.get("/achievements")
       .then((res) => setAchievements(res.data))
       .catch(() => toast.error("Error fetching achievements!"));
   }, []);
@@ -20,15 +21,15 @@ export default function AdminAchievements() {
     e.preventDefault();
 
     if (editId) {
-      await axios.put(`http://localhost:5000/api/achievements/${editId}`, formData);
+      await axiosInstance.put(`/achievements/${editId}`, formData);
       setEditId(null);
       toast.success("Data updated successfully!")
     } else {
-      await axios.post("http://localhost:5000/api/achievements", formData);
+      await axiosInstance.post("/achievements", formData);
       toast.success("New achievement added!");
     }
 
-    axios.get("http://localhost:5000/api/achievements").then((res) => setAchievements(res.data));
+    axiosInstance.get("/achievements").then((res) => setAchievements(res.data));
     setFormData({ title: "" });
   };
 
@@ -43,7 +44,7 @@ export default function AdminAchievements() {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:5000/api/achievements/${id}`);
+        await axiosInstance.delete(`/achievements/${id}`);
         setAchievements(achievements.filter((item) => item._id !== id));
         toast.success("Data deleted successfully!")
       }

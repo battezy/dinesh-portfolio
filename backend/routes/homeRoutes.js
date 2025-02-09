@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 });
 
 // Update Home Data (Protected)
-router.put("/", async (req, res) => {
+router.put("/", verifyToken, async (req, res) => {
   try {
     let home = await HomeModel.findOne();
     if (!home) {

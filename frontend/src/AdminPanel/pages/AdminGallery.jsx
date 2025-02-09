@@ -4,13 +4,14 @@ import axios from "axios";
 import "../style/admingallery.css";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function AdminGallery() {
   const [images, setImages] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/gallery")
+    axiosInstance.get("/gallery")
       .then((res) => setImages(res.data))
       .catch(() => toast.error("Error fetching images!"));
   }, []);
@@ -26,10 +27,10 @@ export default function AdminGallery() {
     formData.append("image", selectedFile);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/upload", formData);
-      await axios.post("http://localhost:5000/api/gallery", { imageUrl: res.data.imageUrl });
+      const res = await axiosInstance.post("/upload", formData);
+      await axiosInstance.post("/gallery", { imageUrl: res.data.imageUrl });
 
-      axios.get("http://localhost:5000/api/gallery").then((res) => setImages(res.data));
+      axiosInstance.get("/gallery").then((res) => setImages(res.data));
       setSelectedFile(null);
       toast.success("Image uploaded successfully!");
     } catch (err) {
@@ -48,7 +49,7 @@ export default function AdminGallery() {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:5000/api/gallery/${id}`);
+        await axiosInstance.delete(`/gallery/${id}`);
         setImages(images.filter((img) => img._id !== id));
         toast.success("Image deleted successfully!")
       }

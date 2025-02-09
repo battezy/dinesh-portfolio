@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 // Add New Achievement (Protected)
-router.post("/", async (req, res) => {
+router.post("/",verifyToken, async (req, res) => {
   try {
     const newAchievement = new AchievementsModel(req.body);
     await newAchievement.save();

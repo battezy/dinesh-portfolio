@@ -14,25 +14,25 @@ const router = express.Router();
 
 
 // **POST: Create Admin (One-time setup)**
-router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
+// router.post("/register", async (req, res) => {
+//   const { name, email, password } = req.body;
 
-  try {
-    const existingAdmin = await AdminModel.findOne({ email });
-    if (existingAdmin) {
-      return res.status(400).json({ message: "Admin already exists!" });
-    }
+//   try {
+//     const existingAdmin = await AdminModel.findOne({ email });
+//     if (existingAdmin) {
+//       return res.status(400).json({ message: "Admin already exists!" });
+//     }
 
-    // **Create New Admin**
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newAdmin = new AdminModel({ name, email, password: hashedPassword });
-    await newAdmin.save();
+//     // **Create New Admin**
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const newAdmin = new AdminModel({ name, email, password: hashedPassword });
+//     await newAdmin.save();
 
-    res.status(201).json({ message: "Admin created successfully!" });
-  } catch (error) {
-    res.status(500).json({ message: "Server Error: Could not create admin." });
-  }
-});
+//     res.status(201).json({ message: "Admin created successfully!" });
+//   } catch (error) {
+//     res.status(500).json({ message: "Server Error: Could not create admin." });
+//   }
+// });
 
 
 

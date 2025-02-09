@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
 });
 
 // Add Image (Protected)
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   try {
     const newImage = new GalleryModel(req.body);
     await newImage.save();
@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
 });
 
 // Delete Image (Protected) & Remove from `uploads/` Folder
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",verifyToken, async (req, res) => {
   try {
     const image = await GalleryModel.findById(req.params.id);
     if (!image) {

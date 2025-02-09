@@ -4,6 +4,7 @@ import { FaEdit, FaTrash, FaCalendarAlt } from "react-icons/fa"; // Importing ic
 import "../style/adminconferences.css";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function AdminConferences() {
   const [conferences, setConferences] = useState([]);
@@ -11,7 +12,7 @@ export default function AdminConferences() {
   const [editId, setEditId] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/conferences")
+    axiosInstance.get("/conferences")
       .then((res) => setConferences(res.data))
       .catch(() => toast.error("Error fetching conferences!"));
   }, []);
@@ -20,16 +21,16 @@ export default function AdminConferences() {
     e.preventDefault();
 
     if (editId) {
-      await axios.put(`http://localhost:5000/api/conferences/${editId}`, formData);
+      await axiosInstance.put(`/conferences/${editId}`, formData);
       setEditId(null);
       toast.success("Data updated successfully!")
 
     } else {
-      await axios.post("http://localhost:5000/api/conferences", formData);
+      await axiosInstance.post("/conferences", formData);
       toast.success("New data added!");
     }
 
-    axios.get("http://localhost:5000/api/conferences").then((res) => setConferences(res.data));
+    axiosInstance.get("/conferences").then((res) => setConferences(res.data));
     setFormData({ title: "", description: "" });
   };
 
@@ -44,7 +45,7 @@ export default function AdminConferences() {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:5000/api/conferences/${id}`);
+        await axiosInstance.delete(`/conferences/${id}`);
         setConferences(conferences.filter((item) => item._id !== id));
         toast.success("Data deleted successfully!")
       }
